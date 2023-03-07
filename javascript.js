@@ -1,6 +1,5 @@
 function getComputerChoice() {
     let choice = ["Rock", "Paper", "Scissors"];
-
     return choice[Math.floor(Math.random() * 3)];
 }
 
@@ -49,20 +48,12 @@ function selectRoundWinner(playerChoice, computerChoice) {
 function displayResult(winner, playerChoice, computerChoice) {
 
     if (winner === "player") {
-        console.log(`You wonn this round! ${playerChoice} beats ${computerChoice}.`);
+        console.log(`You won this round! ${playerChoice} beats ${computerChoice}.`);
     } else if (winner === "computer") {
         console.log(`You lost this round! ${computerChoice} beats ${playerChoice}.`);
     } else {
         console.log(`It's a tie! You both chose ${computerChoice}.`);
     }
-}
-
-function displayScore(scorePlayer, scoreComputer) {
-
-}
-
-function displayWinner(scorePlayer, scoreComputer) {
-
 }
 
 function playGame(rounds) {
@@ -105,10 +96,7 @@ function playGame(rounds) {
 
 }
 
-console.log(`Play a game of Rock-Paper-Scissors against the computer. 
+console.log(`Play a game of Rock-Paper-Scissors against the computer.\nWinner will be the best of five.\nGood Luck!`);
 
-Winner will be the best of five.
-
-Good Luck!`);
 playGame(5);
 
