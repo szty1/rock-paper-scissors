@@ -4,9 +4,25 @@ function getComputerChoice() {
    return choice[Math.floor(Math.random() * 3)];
 }
 
+function getPlayerChoice(message = "Pleas enter your choice:") {
+    let playerChoice;
+
+    playerChoice = window.prompt(message);
+
+    playerChoice = playerChoice.toLowerCase();
+    playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
+
+    if (playerChoice === "Rock" || playerChoice === "Paper" || playerChoice === "Scissors") {
+        return playerChoice;
+    }
+    else {
+        return;
+    }
+}
+
 function selectWinner(playerSelection, computerSelection) {
 
-    let returnStrin = "Sorry! Something went wrong.";
+    let returnString = "Sorry! Something went wrong.";
 
     if (playerSelection === computerSelection) {
         returnString = `It's a tie! You both chose ${playerSelection}.`;
@@ -25,9 +41,16 @@ function selectWinner(playerSelection, computerSelection) {
     }
 
     return returnString;
-}   
+} 
+
+function game(rounds) {
+    for (let i = 0; i < rounds; i++) {
+
+    }
+
+}
 
 
 // console.log(getComputerChoice());
-console.log(selectWinner("Rock", getComputerChoice()));
+console.log(selectWinner(getPlayerChoice(), getComputerChoice()));
 
