@@ -9,6 +9,10 @@ function getPlayerChoice(message = "Pleas enter your choice:") {
 
     playerChoice = window.prompt(message);
 
+    if (playerChoice === null) {
+        
+    }
+
     playerChoice = playerChoice.toLowerCase();
     playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
 
@@ -45,9 +49,9 @@ function selectRoundWinner(playerChoice, computerChoice) {
 function displayResult(winner, playerChoice, computerChoice) {
 
     if (winner === "player") {
-        console.log(`You win! ${playerChoice} beats ${computerChoice}.`);
+        console.log(`You wonn this round! ${playerChoice} beats ${computerChoice}.`);
     } else if (winner === "computer") {
-        console.log(`You lost! ${computerChoice} beats ${playerChoice}.`);
+        console.log(`You lost this round! ${computerChoice} beats ${playerChoice}.`);
     } else {
         console.log(`It's a tie! You both chose ${computerChoice}.`);
     }
@@ -61,7 +65,7 @@ function displayWinner(scorePlayer, scoreComputer) {
 
 }
 
-function game(rounds) {
+function playGame(rounds) {
 
     let computerChoice;
     let playerChoice;
@@ -70,6 +74,8 @@ function game(rounds) {
     let scoreComputer = 0;
 
     for (let i = 0; i < rounds; i++) {
+
+        console.log(`Round ${i + 1}:`);
         computerChoice = getComputerChoice();
         playerChoice = getPlayerChoice();
 
@@ -86,14 +92,23 @@ function game(rounds) {
             scoreComputer++;
         }
 
-        displayScore(scorePlayer, scoreComputer);
+        console.log(`You: ${scorePlayer} Computer: ${scoreComputer} `);
     }
 
-    displayWinner(scorePlayer, scoreComputer);
+    if (scorePlayer > scoreComputer){
+        console.log(`YOU WON!!!\nCongratulations!`);
+    } else if (scorePlayer < scoreComputer) {
+        console.log(`YOU LOST!\nBetter luck next time!`);
+    } else {
+        console.log(`IT'S A TIE!\nTry again!`);
+    };
 
 }
 
+console.log(`Play a game of Rock-Paper-Scissors against the computer. 
 
-// console.log(getComputerChoice());
-game(5);
+Winner will be the best of five.
+
+Good Luck!`);
+playGame(5);
 
