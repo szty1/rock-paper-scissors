@@ -1,26 +1,9 @@
+let scorePlayer = 0;
+let scoreComputer = 0;
+
 function getComputerChoice() {
     const choice = ["Rock", "Paper", "Scissors"];
     return choice[Math.floor(Math.random() * 3)];
-}
-
-function getPlayerChoice(message = "Pleas enter your choice:") {
-    let playerChoice;
-
-    playerChoice = window.prompt(message);
-
-    if (playerChoice === null) {
-        
-    }
-
-    playerChoice = playerChoice.toLowerCase();
-    playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
-
-    if (playerChoice === "Rock" || playerChoice === "Paper" || playerChoice === "Scissors") {
-        return playerChoice;
-    }
-    else {
-        return;
-    }
 }
 
 function selectRoundWinner(playerChoice, computerChoice) {
@@ -32,71 +15,63 @@ function selectRoundWinner(playerChoice, computerChoice) {
     if ((playerChoice === "Rock" && computerChoice === "Scissors") ||
         (playerChoice === "Paper" && computerChoice === "Rock") ||
         (playerChoice === "Scissors" && computerChoice === "Paper")) {
+            scorePlayer++;
             return "player";
         
     }
 
-    if ((playerChoice === "Rock" && computerChoice === "Paper") ||
-        (playerChoice === "Paper" && computerChoice === "Scissors") ||
-        (playerChoice === "Scissors" && computerChoice === "Rock")) {
-            return "computer";
-    }
-
-    return;
+    scoreComputer++;
+    return "computer";
 }
 
 function displayResult(winner, playerChoice, computerChoice) {
 
     if (winner === "player") {
-        console.log(`You won this round! ${playerChoice} beats ${computerChoice}.`);
+        playerScoreDisplay.innerText = scorePlayer;
+        announcementDisplay.innerText = `You won this round! ${playerChoice} beats ${computerChoice}.`;
     } else if (winner === "computer") {
-        console.log(`You lost this round! ${computerChoice} beats ${playerChoice}.`);
+        computerScoreDisplay.innerText = scoreComputer;
+        announcementDisplay.innerText = `You lost this round! ${computerChoice} beats ${playerChoice}.`;
     } else {
-        console.log(`It's a tie! You both chose ${computerChoice}.`);
+        announcementDisplay.innerText = `It's a tie! You both chose ${computerChoice}.`;
     }
 }
 
-function playGame(rounds) {
+function checkWinner() {
+    if (scorePlayer < 5 && scoreComputer < 5) return;
 
-    let computerChoice;
-    let playerChoice;
-    let roundWinner;
-    let scorePlayer = 0;
-    let scoreComputer = 0;
-
-    for (let i = 0; i < rounds; i++) {
-
-        console.log(`Round ${i + 1}:`);
-        computerChoice = getComputerChoice();
-        playerChoice = getPlayerChoice();
-
-        while (playerChoice === undefined) {
-            playerChoice = getPlayerChoice("This is not a valid choice. Try again:");
-        }
-
-        roundWinner = selectRoundWinner(playerChoice, computerChoice);
-        displayResult(roundWinner, playerChoice, computerChoice);
-
-        if (roundWinner === "player") {
-            scorePlayer++;
-        } else if (roundWinner === "computer") {
-            scoreComputer++;
-        }
-
-        console.log(`You: ${scorePlayer} Computer: ${scoreComputer} `);
-    }
-
-    if (scorePlayer > scoreComputer){
-        console.log(`YOU WON!!!\nCongratulations!`);
-    } else if (scorePlayer < scoreComputer) {
-        console.log(`YOU LOST!\nBetter luck next time!`);
+    buttons.forEach(button => button.disabled = true);
+    if (scorePlayer >= 5) {
+        announcementDisplay.innerText = "You won this game! Congratulations!";
     } else {
-        console.log(`IT'S A TIE!\nTry again!`);
-    };
-
+        announcementDisplay.innerText = "You lost! Better luck next time!";
+    }
 }
 
-console.log(`Play a game of Rock-Paper-Scissors against the computer.\nWinner will be the best of five.\nGood Luck!`);
+function playRound(playerChoice) {
 
-playGame(5);
+let computerChoice;
+let roundWinner;
 
+    computerChoice = getComputerChoice();
+
+    playerChoiceDisplay.innerText = playerChoice;
+    computerChoiceDisplay.innerText = computerChoice;
+
+    roundWinner = selectRoundWinner(playerChoice, computerChoice);
+    displayResult(roundWinner, playerChoice, computerChoice);
+    checkWinner();
+}
+
+const playerScoreDisplay  = document.querySelector("#you h1");
+const computerScoreDisplay  = document.querySelector("#computer h1");
+const playerChoiceDisplay = document.querySelector("#you p");
+const computerChoiceDisplay  = document.querySelector("#computer p");
+const announcementDisplay  = document.querySelector(".announcement h2");
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => button.addEventListener('click', startNewRound));
+
+
+function startNewRound(e) {
+    playRound(e.target.innerText);
+}
